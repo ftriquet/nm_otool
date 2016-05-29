@@ -1,5 +1,5 @@
 /* Google: Mach-O File Format: */
-/* https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual */
+/* https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html */
 
 /* http://sourceforge.net/projects/machoview */
 
@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/mman.h>
-#include <libft.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
