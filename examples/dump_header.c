@@ -20,6 +20,7 @@ int		dump_header_64(struct mach_header_64 *header)
 			header->flags);
 	return (1);
 }
+
 int	dump_header(void *header_ptr)
 {
 	int		magic_number;
@@ -33,4 +34,3 @@ int	dump_header(void *header_ptr)
 		return (dump_header_64((struct mach_header_64 *)header_ptr));
 	return (1);
 }
-

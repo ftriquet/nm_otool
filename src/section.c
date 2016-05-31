@@ -1,0 +1,39 @@
+#include <mach-o/loader.h>
+#include <mach-o/nlist.h>
+#include <stdlib.h>
+#include <libft.h>
+
+void		ft_build_section_list(t_list *list, struct mach_header_64 *header)
+{
+	struct load_command		*lc;
+	struct segment_command	*segment;
+	int						i;
+
+	i = 0;
+	lc = (void *)header + sizeof(*header);
+	while (i < header->ncmds)
+	{
+		if (lc->cmd == LC_SEGMENT_64)
+			ft_add_segment_to_list((struct segment_command_64 *)lc, list);
+		++i;
+		lc = (void *)lc + lc->cmdsize;
+	}
+}
+
+void		ft_add_segment_to_list(struct segment_command_64 *segment,
+		t_list *list)
+{
+	int		i;
+	struct section_64	*section;
+
+	i = 0;
+	section = (struct section_64 *)((void *)segment + sizeof(*segment));
+	while (i < segment->nsects)
+	{
+		ft_list_add_back(list, section);
+		section = (void *)section + sizeof(*section);
+		if (section == NULL)
+			break;
+		++i;
+	}
+}
