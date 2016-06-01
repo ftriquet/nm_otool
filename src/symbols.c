@@ -6,9 +6,9 @@
 
 
 const t_type	g_type_table[] = {
-	{"__data", 'd'},
-	{"__bss", 'b'},
-	{"__text", 't'},
+	{SECT_DATA, 'd'},
+	{SECT_BSS, 'b'},
+	{SECT_TEXT, 't'},
 	{NULL, 's'}
 };
 
@@ -41,7 +41,7 @@ char	get_section_type(int n_sect, t_slice *sections)
 	while (g_type_table[i].sectname &&
 			!ft_strequ(g_type_table[i].sectname, section->sectname))
 		++i;
-	return g_type_table[i].symtype;
+	return (g_type_table[i].symtype);
 }
 
 //  	__common	__DATA 	: 	globales non initialisees => S
@@ -55,14 +55,12 @@ char	get_type(struct nlist_64 *sym, t_slice *sections)
 		if ((sym->n_type & N_TYPE) == N_SECT)
 			return (ft_toupper(get_section_type(sym->n_sect, sections)));
 		if ((sym->n_type & N_TYPE) == N_UNDF)
-			return 'U';
+			return (sym->n_value ? 'C' : 'U');
 		if ((sym->n_type & N_TYPE) == N_ABS)
 			return 'A';
-		if ((sym->n_type & N_TYPE) == N_PBUD)
-			return 'P';
 		if ((sym->n_type & N_TYPE) == N_INDR)
 			return 'I';
-		return 'N';
+		return ' ';
 	}
 	else
 	{
@@ -73,11 +71,9 @@ char	get_type(struct nlist_64 *sym, t_slice *sections)
 			return 'u';
 		if ((sym->n_type & N_TYPE) == N_ABS)
 			return 'a';
-		if ((sym->n_type & N_TYPE) == N_PBUD)
-			return 'p';
 		if ((sym->n_type & N_TYPE) == N_INDR)
 			return 'i';
-		return 'n';
+		return ' ';
 	}
 }
 
