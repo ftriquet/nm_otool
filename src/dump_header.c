@@ -1,6 +1,7 @@
 #include <mach-o/loader.h>
 #include <libft.h>
 #include <mach-o/nlist.h>
+#include <nm_otool.h>
 
 /*
 ** otool -h
@@ -29,5 +30,6 @@ int	dump_header(void *header_ptr)
 			"sizeofcmds", "flags");
 	if (magic_number == MH_MAGIC_64)
 		return (dump_header_64((struct mach_header_64 *)header_ptr));
+	return (1);
 }
 

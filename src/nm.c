@@ -1,4 +1,5 @@
 #include <mach-o/loader.h>
+#include <nm_otool.h>
 #include <mach-o/nlist.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -9,7 +10,7 @@
 #include <libft.h>
 
 int		ft_display_symtab(struct mach_header_64 *header, int nsyms,
-		int symoff, int stroff)
+		int symoff, int stroff, t_slice *list)
 {
 	int				i;
 	struct nlist_64	*symbol;
@@ -17,17 +18,17 @@ int		ft_display_symtab(struct mach_header_64 *header, int nsyms,
 
 	i = 0;
 	symbol = (void *)header + symoff;
-	string_table = (void *header) + stroff;
+	string_table = (void *)header + stroff;
 	while (i < nsyms)
 	{
-		ft_print_nlist64(symbol + i);
+		ft_print_nlist64(string_table, symbol + i, list);
 		++i;
 	}
 	return (1);
 }
 
 
-int		ft_display_symlist_64(struct mach_header_64 *header)
+int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list)
 {
 	struct load_command		*lc;
 	int						i;
@@ -41,7 +42,7 @@ int		ft_display_symlist_64(struct mach_header_64 *header)
 		{
 			symtab = (struct symtab_command *)lc;
 			ft_display_symtab(header, symtab->nsyms,
-					symtab->symoff, symtab->stroff);
+					symtab->symoff, symtab->stroff, list);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
