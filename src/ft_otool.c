@@ -6,7 +6,7 @@
 /*   By: akpenou <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:50:38 by akpenou           #+#    #+#             */
-/*   Updated: 2016/06/02 00:04:34 by akpenou          ###   ########.fr       */
+/*   Updated: 2016/06/02 00:11:05 by akpenou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void ft_print_output(struct section_64 *section)
+static void ft_print_output(struct section_64 *section, void *ptr)
 {
 	unsigned char	*p;
 	uint64_t		i;
@@ -27,7 +27,7 @@ static void ft_print_output(struct section_64 *section)
 
 	printf("-----------------------------------------------------\n");
 	printf("(%s,%s) section\n", section->segname, section->sectname);
-	p = (void *)section ;
+	p = (void *)ptr + section->offset;
 	i = 0;
 
 	while (i < section->size)
@@ -91,7 +91,7 @@ void		handler_64(char *ptr)
 					printf("reserved3 %x\n", sect->reserved3);			/* reserved */
 					if (!strcmp(sect->sectname, SECT_TEXT))
 					{
-						ft_print_output(sect);
+						ft_print_output(sect, ptr);
 						break ;
 					}
 					sect = (void *)sect + sizeof(*sect);
