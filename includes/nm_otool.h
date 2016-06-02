@@ -10,7 +10,7 @@ typedef struct s_type
 	char		symtype;
 }				t_type;
 
-extern t_type	g_type_table[];
+extern const t_type	g_type_table[];
 /*
  ** section.c
  */

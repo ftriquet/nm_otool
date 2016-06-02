@@ -4,18 +4,7 @@
 #include <stdlib.h>
 #include <libft.h>
 
-
-const t_type	g_type_table[] = {
-	{SECT_DATA, 'd'},
-	{SECT_BSS, 'b'},
-	{SECT_TEXT, 't'},
-	{NULL, 's'}
-};
-
-/*
-** TODO: type des symboles, ne pas afficher l'addresse des undefine
-*/
-void	ft_print_nlist_64(char *stringtable, struct nlist_64 *symbol,
+void	ft_print_nlist_32(char *stringtable, struct nlist *symbol,
 		t_slice *list)
 {
 	if (!(symbol->n_type & N_STAB))
@@ -25,15 +14,15 @@ void	ft_print_nlist_64(char *stringtable, struct nlist_64 *symbol,
 		else
 			ft_putstr("                 ");
 		// ft_printf("%hhx ", symbol->n_type);
-		ft_printf("%c ", get_type_64(symbol, list));
+		ft_printf("%c ", get_type_32(symbol, list));
 		// ft_printf("%d ", symbol->n_sect);
 		ft_printf("%s\n", stringtable + symbol->n_un.n_strx);
 	}
 }
 
-char	get_section_type_64(int n_sect, t_slice *sections)
+char	get_section_type_32(int n_sect, t_slice *sections)
 {
-	struct section_64	*section;
+	struct section		*section;
 	int					i;
 
 	i = 0;
@@ -47,13 +36,13 @@ char	get_section_type_64(int n_sect, t_slice *sections)
 //  	__common	__DATA 	: 	globales non initialisees => S
 //  	__data		__DATA 	: 	globales initialisees => D
 //  	__bss		__DATA 	: 	variables static
-char	get_type_64(struct nlist_64 *sym, t_slice *sections)
+char	get_type_32(struct nlist *sym, t_slice *sections)
 {
 	if (sym->n_type & N_EXT)
 	{
 		// upeercase
 		if ((sym->n_type & N_TYPE) == N_SECT)
-			return (ft_toupper(get_section_type_64(sym->n_sect, sections)));
+			return (ft_toupper(get_section_type_32(sym->n_sect, sections)));
 		if ((sym->n_type & N_TYPE) == N_UNDF)
 			return (sym->n_value ? 'C' : 'U');
 		if ((sym->n_type & N_TYPE) == N_ABS)
@@ -66,7 +55,7 @@ char	get_type_64(struct nlist_64 *sym, t_slice *sections)
 	{
 		// lowercase
 		if ((sym->n_type & N_TYPE) == N_SECT)
-			return (get_section_type_64(sym->n_sect, sections));
+			return (get_section_type_32(sym->n_sect, sections));
 		if ((sym->n_type & N_TYPE) == N_UNDF)
 			return 'u';
 		if ((sym->n_type & N_TYPE) == N_ABS)

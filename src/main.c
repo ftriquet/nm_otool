@@ -9,26 +9,13 @@
 #include <stdlib.h>
 #include <libft.h>
 
-char	*g_strrrrrrrrrrrrrrrrrrrrrrrrrr = "LOL";
-char	*g_loooooooooooooooooooooooool;
-
-void	print_section(void *section)
-{
-	struct section_64 *sec;
-
-	sec = (struct section_64 *)section;
-	ft_putendl("================");
-	ft_printf("%s\n", sec->sectname);
-	ft_printf("%s\n", sec->segname);
-	ft_putendl("================");
-}
-
 void	nm(char *ptr)
 {
 	int		magic_number;
 	t_slice	*list;
 
 	magic_number = *((int *)ptr);
+	// ft_printf("%u\n", magic_number);
 	if (magic_number == MH_MAGIC_64)
 	{
 		list = ft_new_slice(15);
@@ -37,11 +24,6 @@ void	nm(char *ptr)
 	}
 }
 
-static int TEST_STATIC(void) {
-	static int TEST_STATIC_VAR;
-	static int TEST_STATIC_VAR_INIT = 0;
-	ft_putendl("adasd");
-}
 int main(int ac, char **av)
 {
 	struct stat	buf;
