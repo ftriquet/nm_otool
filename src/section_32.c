@@ -7,8 +7,7 @@
 void		ft_build_section_list_32(t_slice *list, struct mach_header *header)
 {
 	struct load_command		*lc;
-	struct segment_command	*segment;
-	int						i;
+	unsigned int			i;
 
 	i = 0;
 	lc = (void *)header + sizeof(*header);
@@ -24,7 +23,7 @@ void		ft_build_section_list_32(t_slice *list, struct mach_header *header)
 void		ft_add_segment_to_list_32(struct segment_command *segment,
 		t_slice *list)
 {
-	int				i;
+	unsigned int	i;
 	struct section	*section;
 
 	i = 0;

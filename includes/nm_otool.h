@@ -22,7 +22,7 @@ void			ft_build_section_list_32(t_slice *list, struct mach_header *header);
 void			ft_add_segment_to_list_32(struct segment_command *segment,
 		t_slice *list);
 /*
- ** nm.c
+ ** symbol_table.c
  */
 int				ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
 		int symoff, int stroff, t_slice *list);
@@ -30,6 +30,15 @@ int				ft_display_symlist_64(struct mach_header_64 *header, t_slice *list);
 int				ft_display_symlist_32(struct mach_header *header, t_slice *list);
 int				ft_display_symtab_32(struct mach_header *header, int nsyms,
 		int symoff, int stroff, t_slice *list);
+
+
+/*
+** nm.c
+*/
+int			ft_nm_32(char *ptr, t_slice *list);
+int			ft_nm_64(char *ptr, t_slice *list);
+int			ft_nm(char *ptr);
+int			ft_nm_dylib(char *ptr, t_slice *list);
 
 /*
  ** main.c

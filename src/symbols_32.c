@@ -10,7 +10,7 @@ void	ft_print_nlist_32(char *stringtable, struct nlist *symbol,
 	if (!(symbol->n_type & N_STAB))
 	{
 		if (symbol->n_value)
-			ft_printf("%016llx ", symbol->n_value);
+			ft_printf("%08llx ", symbol->n_value);
 		else
 			ft_putstr("                 ");
 		// ft_printf("%hhx ", symbol->n_type);

@@ -12,14 +12,14 @@
 int		ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
 		int symoff, int stroff, t_slice *list)
 {
-	int				i;
+	size_t			i;
 	struct nlist_64	*symbol;
 	char			*string_table;
 
 	i = 0;
 	symbol = (void *)header + symoff;
 	string_table = (void *)header + stroff;
-	while (i < nsyms)
+	while ((int)i < nsyms)
 	{
 		ft_print_nlist_64(string_table, symbol + i, list);
 		++i;
@@ -31,7 +31,7 @@ int		ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
 int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list)
 {
 	struct load_command		*lc;
-	int						i;
+	size_t					i;
 	struct symtab_command	*symtab;
 
 	i = 0;
@@ -73,7 +73,7 @@ int		ft_display_symtab_32(struct mach_header *header, int nsyms,
 int		ft_display_symlist_32(struct mach_header *header, t_slice *list)
 {
 	struct load_command		*lc;
-	int						i;
+	size_t					i;
 	struct symtab_command	*symtab;
 
 	i = 0;
