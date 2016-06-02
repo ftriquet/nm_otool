@@ -13,7 +13,7 @@ void		ft_build_section_list_32(t_slice *list, struct mach_header *header)
 	lc = (void *)header + sizeof(*header);
 	while (i < header->ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT_64)
+		if (lc->cmd == LC_SEGMENT)
 			ft_add_segment_to_list_32((struct segment_command *)lc, list);
 		++i;
 		lc = (void *)lc + lc->cmdsize;

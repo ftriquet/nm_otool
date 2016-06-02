@@ -12,7 +12,7 @@ void	ft_print_nlist_32(char *stringtable, struct nlist *symbol,
 		if (symbol->n_value)
 			ft_printf("%08llx ", symbol->n_value);
 		else
-			ft_putstr("                 ");
+			ft_putstr("         ");
 		// ft_printf("%hhx ", symbol->n_type);
 		ft_printf("%c ", get_type_32(symbol, list));
 		// ft_printf("%d ", symbol->n_sect);
@@ -33,9 +33,6 @@ char	get_section_type_32(int n_sect, t_slice *sections)
 	return (g_type_table[i].symtype);
 }
 
-//  	__common	__DATA 	: 	globales non initialisees => S
-//  	__data		__DATA 	: 	globales initialisees => D
-//  	__bss		__DATA 	: 	variables static
 char	get_type_32(struct nlist *sym, t_slice *sections)
 {
 	if (sym->n_type & N_EXT)
