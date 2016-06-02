@@ -19,9 +19,12 @@ void		ft_add_segment_to_list(struct segment_command_64 *segment,
 /*
 ** nm.c
 */
-int		ft_display_symtab(struct mach_header_64 *header, int nsyms,
+int		ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
 		int symoff, int stroff, t_slice *list);
 int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list);
+int		ft_display_symlist_32(struct mach_header *header, t_slice *list);
+int		ft_display_symtab_32(struct mach_header *header, int nsyms,
+		int symoff, int stroff, t_slice *list);
 
 /*
 ** main.c
