@@ -6,7 +6,7 @@
 /*   By: akpenou <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:50:38 by akpenou           #+#    #+#             */
-/*   Updated: 2016/06/02 22:00:19 by akpenou          ###   ########.fr       */
+/*   Updated: 2016/06/02 23:59:51 by akpenou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,20 @@ void		handler_64(char *ptr)
 	struct load_command			*lc;
 
 	i = 0;
+printf("line : %d\n", __LINE__);
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	while (++i < ((struct mach_header_64 *)ptr)->ncmds)
 		if (lc->cmd == LC_SEGMENT_64)
 		{
+printf("line : %d\n", __LINE__);
 			seg = (struct segment_command_64 *)lc;
 			if (!strcmp(seg->segname, SEG_TEXT) && (i = -1))
 			{
+printf("line : %d\n", __LINE__);
 				sect = (void *)seg + sizeof(struct segment_command_64);
 				while (++i < seg->nsects)
 				{
+printf("line : %d\n", __LINE__);
 					if (!strcmp(sect->sectname, SECT_TEXT))
 						return (ft_print_output_64(sect, ptr));
 					sect = (void *)sect + sizeof(*sect);
@@ -77,7 +81,7 @@ static void	ft_print_output_32(struct section *section, void *ptr)
 	i = 0;
 	while (i < section->size)
 	{
-		printf("%016llx ", (unsigned long long)section->addr + i);
+		printf("%08llx ", (unsigned long long)section->addr + i);
 		j = 17;
 		while (i < section->size && --j)
 			printf("%02hhx ", p[i++]);
@@ -93,14 +97,14 @@ void		handler_32(char *ptr)
 	struct load_command		*lc;
 
 	i = 0;
-	lc = (void *)ptr + sizeof(struct mach_header_64);
+	lc = (void *)ptr + sizeof(struct mach_header);
 	while (++i < ((struct mach_header *)ptr)->ncmds)
 		if (lc->cmd == LC_SEGMENT)
 		{
 			seg = (struct segment_command *)lc;
 			if (!strcmp(seg->segname, SEG_TEXT) && (i = -1))
 			{
-				sect = (void *)seg + sizeof(struct segment_command_64);
+				sect = (void *)seg + sizeof(struct segment_command);
 				while (++i < seg->nsects)
 				{
 					if (!strcmp(sect->sectname, SECT_TEXT))
@@ -117,6 +121,7 @@ void		ft_otool(char *ptr)
 	unsigned int	magic_number;
 
 	magic_number = *(int *)ptr;
+	printf("magic = %#x\n", magic_number);
 	if (magic_number == MH_MAGIC_64)
 		handler_64(ptr);
 	else if (magic_number == MH_MAGIC)
