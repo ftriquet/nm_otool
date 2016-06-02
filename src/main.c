@@ -32,12 +32,9 @@ void	nm(char *ptr)
 	if (magic_number == MH_MAGIC_64)
 	{
 		list = ft_new_slice(15);
-		ft_build_section_list(list, ptr);
-		// ft_printf("Nb sections:%lu\n", list->size);
-		//ft_slice_iter(list, &print_section);
+		ft_build_section_list_64(list, ptr);
 		ft_display_symlist_64(ptr, list);
 	}
-	// dump_header(ptr);
 }
 
 static int TEST_STATIC(void) {

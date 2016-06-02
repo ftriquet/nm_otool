@@ -6,7 +6,7 @@
 /*   By: akpenou <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:50:38 by akpenou           #+#    #+#             */
-/*   Updated: 2016/06/02 14:42:47 by akpenou          ###   ########.fr       */
+/*   Updated: 2016/06/02 20:43:28 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void ft_print_output(struct section_64 *section, void *ptr)
 	}
 }
 
-static void ft_print_h(struct mach_header_64 *header)
+static void ft_print_h(struct mach_header *header)
 {
 	printf("%10s %10s %10s %10s %10s %10s %10s %10s\n",
 			"magic", "cputype", "cpusubtype", "caps", "filetype",
@@ -62,7 +62,7 @@ void		handler_64(char *ptr)
 	i = 0;
 	printf("%p\n", ptr);
 	header = (struct mach_header_64 *) ptr;
-	ft_print_h(header);
+	ft_print_h((struct mach_header *)header);
 	ncmds = header->ncmds;
 //	lc = (void *) ptr + sizeof(*header);
 //	while (++i < ncmds)
