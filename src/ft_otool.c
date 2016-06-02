@@ -6,7 +6,7 @@
 /*   By: akpenou <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 15:50:38 by akpenou           #+#    #+#             */
-/*   Updated: 2016/06/02 00:11:05 by akpenou          ###   ########.fr       */
+/*   Updated: 2016/06/02 14:58:44 by akpenou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,18 @@
 static void ft_print_output(struct section_64 *section, void *ptr)
 {
 	unsigned char	*p;
-	uint64_t		i;
+	unsigned int	i;
 	int				j;
 
-	printf("-----------------------------------------------------\n");
 	printf("(%s,%s) section\n", section->segname, section->sectname);
 	p = (void *)ptr + section->offset;
 	i = 0;
 
 	while (i < section->size)
 	{
-		printf("%016llx ", p + i);
+		printf("%016llx ", (unsigned long long)section->addr + i);
 		j = 17;
 		while (i < section->size && --j)
-	//		i++;
 			printf("%02hhx ", p[i++]);
 		printf("\n");
 	}
@@ -43,15 +41,14 @@ static void ft_print_output(struct section_64 *section, void *ptr)
 
 void		handler_64(char *ptr)
 {
-	int							i;
-	int							ncmds;
+	unsigned int				i;
+	unsigned int				ncmds;
 	struct mach_header_64		*header;
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
 	struct load_command			*lc;
 
 	i = 0;
-	printf("%p\n", ptr);
 	header = (struct mach_header_64 *) ptr;
 	ncmds = header->ncmds;
 	lc = (void *) ptr + sizeof(*header);
@@ -60,35 +57,12 @@ void		handler_64(char *ptr)
 		if (lc->cmd == LC_SEGMENT_64)
 		{
 			seg = (struct segment_command_64 *) lc;
-			printf("----------------------------------------------------- %p\n", seg);
-			printf("cmd %x\n", seg->cmd);						/* LC_SEGMENT_64 */
-			printf("cmdsize %x\n", seg->cmdsize);				/* includes sizeof section_64 structs */
-			printf("segname[16] %s\n", (char *)seg->segname);	/* segment name */
-			printf("vmaddr %llx\n", seg->vmaddr);				/* memory address of this segment */
-			printf("vmsize %llx\n", seg->vmsize);				/* memory size of this segment */
-			printf("fileoff %llx\n", seg->fileoff);				/* file offset of this segment */
-			printf("filesize %llx\n", seg->filesize);			/* amount to map from the file */
-			printf("nsects %x\n", seg->nsects);					/* number of sections in segment */
-			printf("flags %x\n", seg->flags);					/* flags */
 			if (!strcmp(seg->segname, SEG_TEXT))
 			{
 				i = -1;
 				sect = (void *)seg + sizeof(struct segment_command_64);
 				while (++i < seg->nsects)
 				{
-					printf("------------------ SECTION -----------------%p\n", sect);
-					printf("sectname[16] %s\n", sect->sectname);	/* name of this section */
-					printf("segname[16] %s\n", sect->segname);		/* segment this section goes in */
-					printf("addr %p\n", sect->addr);					/* memory address of this section */
-					printf("size %llx\n", sect->size);					/* size in bytes of this section */
-					printf("offset %x\n", sect->offset);				/* file offset of this section */
-					printf("align %x\n", sect->align);					/* section alignment (power of 2) */
-					printf("reloff %x\n", sect->reloff);				/* file offset of relocation entries */
-					printf("nreloc %d\n", sect->nreloc);				/* number of relocation entries */
-					printf("flags %x\n", sect->flags);					/* flags (section type and attributes)*/
-					printf("reserved1 %x\n", sect->reserved1);			/* reserved (for offset or index) */
-					printf("reserved2 %x\n", sect->reserved2);			/* reserved (for count or sizeof) */
-					printf("reserved3 %x\n", sect->reserved3);			/* reserved */
 					if (!strcmp(sect->sectname, SECT_TEXT))
 					{
 						ft_print_output(sect, ptr);
@@ -102,9 +76,9 @@ void		handler_64(char *ptr)
 	}
 }
 
-void		nm(char *ptr)
+void		ft_otool(char *ptr)
 {
-	int						magic_number;
+	unsigned int	magic_number;
 
 	magic_number = *(int *) ptr;
 	if (magic_number == MH_MAGIC_64)
@@ -143,8 +117,8 @@ int 		main(int argc, char **argv)
 		puts("mmap failed");
 		return (-1);
 	}
-	printf("size = %x\n", buf.st_size);
-	nm(ptr);
+	printf("%s:\n", argv[1]);
+	ft_otool(ptr);
 	if (munmap(ptr, buf.st_size) < 0)
 	{
 		puts("munmap failed");
