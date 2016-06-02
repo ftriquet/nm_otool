@@ -6,7 +6,7 @@
 #    By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/28 08:35:37 by ftriquet          #+#    #+#              #
-#    Updated: 2016/05/31 21:39:09 by ftriquet         ###   ########.fr        #
+#    Updated: 2016/06/03 00:12:25 by ftriquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,7 @@ SRC_NAME += strings/ft_empty_string.c \
 
 SRC_NAME += slices/slices.c \
 			slices/slices_utils.c \
+			slices/slices_sort.c \
 			slices/slices_iter.c
 
 SYSTEM = $(shell uname -s)
