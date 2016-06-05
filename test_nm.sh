@@ -1,6 +1,19 @@
 #!/bin/bash
-VAR=`./ft_nm ft_nm > FT_NM_OUTPUT && nm ft_nm > NM_OUTPUT && diff NM_OUTPUT FT_NM_OUTPUT`
-if [ -z "$VAR" ]; then
+FT_NM=`./ft_nm $1`
+NM=`nm $1`
+
+echo "$FT_NM" > FT_NM_OUTPUT
+echo "$NM" > NM_OUTPUT
+
+DIFF=`diff FT_NM_OUTPUT NM_OUTPUT`
+
+echo 'ft_nm:'
+cat FT_NM_OUTPUT
+
+echo 'nm:'
+cat NM_OUTPUT
+
+if [ -z "$DIFF" ]; then
 	echo "OK"
 else
 	echo "KO"
