@@ -30,10 +30,10 @@ int				ft_display_symlist_32(struct mach_header *header, t_slice *list);
 /*
 ** nm.c
 */
-int			ft_nm_32(char *ptr, t_slice *list);
-int			ft_nm_64(char *ptr, t_slice *list);
-int			ft_nm(char *ptr);
-int			ft_nm_dylib(char *ptr, t_slice *list);
+int				ft_nm_32(char *ptr, t_slice *list, char *name);
+int				ft_nm_64(char *ptr, t_slice *list, char *name);
+int				ft_nm(char *ptr, char *name);
+int				ft_nm_dylib(char *ptr, t_slice *list, char *name);
 
 /*
  ** main.c
