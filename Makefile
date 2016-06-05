@@ -1,35 +1,57 @@
-NAME = nm-otool
+NM_SRCS_NAMES = nm.c \
+				section.c \
+				section_32.c \
+				symbol_table.c \
+				symbols.c \
+				symbols_32.c \
+				main.c
 
-C_DIR =	srcs
-C_DIRS = $(shell find $(C_DIR) -type d -follow -print)
-C_FILES = $(shell find $(C_DIR) -type f -follow -print | grep "\.c")
+NM_OBJS_NAMES = $(NM_SRCS_NAMES:.c=.o)
 
-O_DIR =	.tmp/obj
-O_DIRS = $(C_DIRS:$(C_DIR)%=$(O_DIR)%)
-O_FILES = $(C_FILES:$(C_DIR)%.c=$(O_DIR)%.o)
+OTOOL_SRCS_NAMES = ft_otool.c \
+				   ft_otool_d.c \
+				   ft_otool_tmp.c
 
-FLAGS = -Wall -Wextra -Werror
-INCLUDES = -Iincludes -Ilibft/includes
-LIB = -Llibft -lft
+OTOOL_OBJS_NAMES = $(OTOOL_SRCS_NAMES:.c=.o)
 
-all: $(NAME)
+SRC_DIR = src/
 
-$(NAME): $(O_FILES)
+OBJ_DIR = obj/
+
+NM_SRCS = $(addprefix $(SRC_DIR), $(NM_SRCS_NAMES))
+OTOOL_SRCS = $(addprefix $(SRC_DIR), $(OTOOL_SRCS_NAMES))
+
+NM_OBJS = $(addprefix $(OBJ_DIR), $(NM_OBJS_NAMES))
+OTOOL_OBJS = $(addprefix $(OBJ_DIR), $(OTOOL_OBJS_NAMES))
+
+CFLAGS = -Wall -Wextra -Werror
+
+LDFLAGS = -lft -L libft
+
+INCFLAGS = -I includes -I libft/includes
+
+all: ft_nm ft_otool
+
+ft_otool: $(OTOOL_OBJS)
 	make -C libft
-	gcc $(FLAGS) $^ $(LIB) $(SRCI) -o $@
+	gcc $(CLFAGS) $^ $(LDFLAGS) $(INCFLAGS) -o $@
 
-$(O_DIR)%.o: $(C_DIR)%.c
-	mkdir -p $(O_DIRS) $(O_DIR)
-	gcc $(FLAGS) $(INCLUDES) -o $@ -c $&lt;
+
+ft_nm: $(NM_OBJS)
+	make -C libft
+	gcc $(CLFAGS) $^ $(LDFLAGS) $(INCFLAGS) -o $@
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	gcc -c $(CFLAGS) $< -o $@ $(INCFLAGS)
 
 clean:
 	make clean -C libft
-	rm -rf $(O_DIR)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	make fclean -C libft
-	rm -f $(NAME)
-	rm -rf .tmp/
+	rm -f ft_nm ft_otool
 
 re: fclean all
 

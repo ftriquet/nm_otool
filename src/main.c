@@ -9,23 +9,6 @@
 #include <stdlib.h>
 #include <libft.h>
 
-/*
-void	nm(char *ptr)
-{
-	int		magic_number;
-	t_slice	*list;
-
-	magic_number = *((int *)ptr);
-	// ft_printf("%u\n", magic_number);
-	if (magic_number == MH_MAGIC_64)
-	{
-		list = ft_new_slice(15);
-		ft_build_section_list_64(list, ptr);
-		ft_display_symlist_64(ptr, list);
-	}
-}
-*/
-
 int			ft_openfile(int fd)
 {
 	char			*ptr;
