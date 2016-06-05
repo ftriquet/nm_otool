@@ -64,4 +64,10 @@ char			get_section_type_32(int n_sect, t_slice *sections);
 int				dump_header_64(struct mach_header_64 *header);
 int				dump_header(void *header_ptr);
 
+/*
+** sort.c
+*/
+int				no_cmp(void *sym1, void *sym2);
+int				alpha_cmp(void *sym1, void *sym2);
+
 #endif
