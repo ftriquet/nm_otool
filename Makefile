@@ -4,6 +4,8 @@ NM_SRCS_NAMES = nm.c \
 				symbol_table.c \
 				symbols.c \
 				symbols_32.c \
+				symlist.c \
+			   	sort.c \
 				main.c
 
 NM_OBJS_NAMES = $(NM_SRCS_NAMES:.c=.o)

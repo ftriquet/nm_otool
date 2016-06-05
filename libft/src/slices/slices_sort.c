@@ -6,7 +6,7 @@
 /*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 00:20:44 by ftriquet          #+#    #+#             */
-/*   Updated: 2016/06/03 00:21:19 by ftriquet         ###   ########.fr       */
+/*   Updated: 2016/06/05 16:14:47 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	do_nothing(void *elem)
 }
 
 static void	ft_merge_slices(t_slice *main, t_slice *left, t_slice *right,
-		int (*cmp)(void *, void *))
+		int (*cmp)(void *, void *, char *), char *strtable)
 {
 	size_t		i;
 	size_t		j;
@@ -35,7 +35,7 @@ static void	ft_merge_slices(t_slice *main, t_slice *left, t_slice *right,
 	k = 0;
 	while (i < left->size && j < right->size)
 	{
-		if ((*cmp)(ft_slice_get(left, i), ft_slice_get(right, j)) < 0)
+		if ((*cmp)(ft_slice_get(left, i), ft_slice_get(right, j), strtable) < 0)
 			ft_slice_put(main, ft_slice_get(left, i++), k);
 		else
 			ft_slice_put(main, ft_slice_get(right, j++), k);
@@ -47,7 +47,7 @@ static void	ft_merge_slices(t_slice *main, t_slice *left, t_slice *right,
 		ft_slice_put(main, ft_slice_get(right, j++), k++);
 }
 
-void		ft_slice_merge_sort(t_slice *slice, int (*cmp)(void *, void *))
+void		ft_slice_merge_sort(t_slice *slice, int (*cmp)(void *, void *, char *), char *strtable)
 {
 	t_slice			*left;
 	t_slice			*right;
@@ -56,9 +56,9 @@ void		ft_slice_merge_sort(t_slice *slice, int (*cmp)(void *, void *))
 		return ;
 	left = ft_slice_slice(slice, -1, slice->size / 2, &cp);
 	right = ft_slice_slice(slice, slice->size / 2, -1, &cp);
-	ft_slice_merge_sort(left, cmp);
-	ft_slice_merge_sort(right, cmp);
-	ft_merge_slices(slice, left, right, cmp);
+	ft_slice_merge_sort(left, cmp, strtable);
+	ft_slice_merge_sort(right, cmp, strtable);
+	ft_merge_slices(slice, left, right, cmp, strtable);
 	ft_slice_delete(&left, &do_nothing);
 	ft_slice_delete(&right, &do_nothing);
 }

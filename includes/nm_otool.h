@@ -24,13 +24,8 @@ void			ft_add_segment_to_list_32(struct segment_command *segment,
 /*
  ** symbol_table.c
  */
-int				ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
-		int symoff, int stroff, t_slice *list);
 int				ft_display_symlist_64(struct mach_header_64 *header, t_slice *list);
 int				ft_display_symlist_32(struct mach_header *header, t_slice *list);
-int				ft_display_symtab_32(struct mach_header *header, int nsyms,
-		int symoff, int stroff, t_slice *list);
-
 
 /*
 ** nm.c
@@ -68,6 +63,14 @@ int				dump_header(void *header_ptr);
 ** sort.c
 */
 int				no_cmp(void *sym1, void *sym2);
-int				alpha_cmp(void *sym1, void *sym2);
+int				alpha_cmp(void *sym1, void *sym2, char *strtable);
+
+/*
+** symlist.c
+*/
+int				ft_print_symlist_32(t_slice *symlist, t_slice *sectlist, char *stringtable);
+t_slice			*ft_build_symlist_32(struct mach_header *header, int nsyms, int symoff);
+int				ft_print_symlist_64(t_slice *symlist, t_slice *sectlist, char *stringtable);
+t_slice			*ft_build_symlist_64(struct mach_header_64 *header, int nsyms, int symoff);
 
 #endif

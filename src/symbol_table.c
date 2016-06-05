@@ -9,30 +9,12 @@
 #include <stdlib.h>
 #include <libft.h>
 
-int		ft_display_symtab_64(struct mach_header_64 *header, int nsyms,
-		int symoff, int stroff, t_slice *list)
-{
-	size_t			i;
-	struct nlist_64	*symbol;
-	char			*string_table;
-
-	i = 0;
-	symbol = (void *)header + symoff;
-	string_table = (void *)header + stroff;
-	while ((int)i < nsyms)
-	{
-		ft_print_nlist_64(string_table, symbol + i, list);
-		++i;
-	}
-	return (1);
-}
-
-
-int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list)
+int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *sectlist)
 {
 	struct load_command		*lc;
 	size_t					i;
 	struct symtab_command	*symtab;
+	t_slice					*symlist;
 
 	i = 0;
 	lc = (void *)header + sizeof(*header);
@@ -41,8 +23,9 @@ int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list)
 		if (lc->cmd == LC_SYMTAB)
 		{
 			symtab = (struct symtab_command *)lc;
-			ft_display_symtab_64(header, symtab->nsyms,
-					symtab->symoff, symtab->stroff, list);
+			symlist = ft_build_symlist_64(header, symtab->nsyms, symtab->symoff);
+			ft_slice_merge_sort(symlist, &alpha_cmp, (void *)header + symtab->stroff);
+			ft_print_symlist_64(symlist, sectlist, (void *)header + symtab->stroff);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
@@ -51,30 +34,12 @@ int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *list)
 	return (1);
 }
 
-int		ft_display_symtab_32(struct mach_header *header, int nsyms,
-		int symoff, int stroff, t_slice *list)
-{
-	int				i;
-	struct nlist	*symbol;
-	char			*string_table;
-
-	i = 0;
-	symbol = (void *)header + symoff;
-	string_table = (void *)header + stroff;
-	while (i < nsyms)
-	{
-		ft_print_nlist_32(string_table, symbol + i, list);
-		++i;
-	}
-	return (1);
-}
-
-
-int		ft_display_symlist_32(struct mach_header *header, t_slice *list)
+int		ft_display_symlist_32(struct mach_header *header, t_slice *sectlist)
 {
 	struct load_command		*lc;
 	size_t					i;
 	struct symtab_command	*symtab;
+	t_slice					*symlist;
 
 	i = 0;
 	lc = (void *)header + sizeof(*header);
@@ -83,8 +48,9 @@ int		ft_display_symlist_32(struct mach_header *header, t_slice *list)
 		if (lc->cmd == LC_SYMTAB)
 		{
 			symtab = (struct symtab_command *)lc;
-			ft_display_symtab_32(header, symtab->nsyms,
-					symtab->symoff, symtab->stroff, list);
+			symlist = ft_build_symlist_32(header, symtab->nsyms, symtab->symoff);
+			ft_slice_merge_sort(symlist, &alpha_cmp, (void *)header + symtab->stroff);
+			ft_print_symlist_32(symlist, sectlist, (void *)header + symtab->stroff);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;

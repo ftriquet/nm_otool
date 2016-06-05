@@ -6,7 +6,7 @@
 /*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/26 18:28:22 by ftriquet          #+#    #+#             */
-/*   Updated: 2016/06/03 00:12:02 by ftriquet         ###   ########.fr       */
+/*   Updated: 2016/06/05 16:13:00 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ t_slice				*ft_slice_map(t_slice *v, void *(*f)(void *));
 void				ft_slice_iter(t_slice *v, void (*f)(void *));
 int					ft_slice_match(t_slice *s, int (*f)(void *));
 void				ft_slice_merge_sort(t_slice *slice,
-		int (*cmp)(void *, void *));
+		int (*cmp)(void *, void *, char *strtable), char *strtable);
 
 #endif
