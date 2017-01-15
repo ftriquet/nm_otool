@@ -7,15 +7,16 @@ echo "$NM" > NM_OUTPUT
 
 DIFF=`diff FT_NM_OUTPUT NM_OUTPUT`
 
-echo 'ft_nm:'
-cat FT_NM_OUTPUT
-
-echo 'nm:'
-cat NM_OUTPUT
+# echo 'ft_nm:'
+# cat FT_NM_OUTPUT
+#
+# echo 'nm:'
+# cat NM_OUTPUT
 
 if [ -z "$DIFF" ]; then
 	echo "OK"
 else
+	echo "$DIFF"
 	echo "KO"
 fi
 rm FT_NM_OUTPUT

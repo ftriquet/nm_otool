@@ -23,16 +23,8 @@ int			ft_nm(char *ptr, char *name)
 		return (ft_nm_32(ptr, list, name));
 	if (magic_number == MH_DYLIB)
 		return (ft_nm_dylib(ptr, list, name));
-	if (magic_number == FAT_MAGIC)
-	{
-		ft_putendl("FAT BINARY");
-		return (0);
-	}
-	if (magic_number == FAT_CIGAM)
-	{
-		ft_putendl("TAF BINARY");
-		return (0);
-	}
+	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
+		return ft_fat(ptr, NULL, (magic_number == FAT_CIGAM));
 	ft_dprintf(STDERR_FILENO, "\n%s: This file is not a valid binary\n", name);
 	return (1);
 }

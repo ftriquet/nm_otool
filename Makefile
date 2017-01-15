@@ -5,6 +5,7 @@ NM_SRCS_NAMES = nm.c \
 				symbols.c \
 				symbols_32.c \
 				symlist.c \
+				fat.c \
 			   	sort.c \
 				main.c
 
@@ -26,7 +27,7 @@ OTOOL_SRCS = $(addprefix $(SRC_DIR), $(OTOOL_SRCS_NAMES))
 NM_OBJS = $(addprefix $(OBJ_DIR), $(NM_OBJS_NAMES))
 OTOOL_OBJS = $(addprefix $(OBJ_DIR), $(OTOOL_OBJS_NAMES))
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 LDFLAGS = -lft -L libft
 

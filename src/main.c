@@ -14,7 +14,7 @@ int			ft_openfile(int fd, char *name)
 	char			*ptr;
 	struct stat		buf;
 
-	if (fstat(fd, &buf) < 0 || (ptr = mmap(0, buf.st_size, PROT_READ,
+	if (fstat(fd, &buf) < 0 || (ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
 				MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 	{
 		ft_dprintf(STDERR_FILENO, "system failed");

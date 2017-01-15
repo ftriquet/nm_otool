@@ -14,6 +14,8 @@ extern const t_type	g_type_table[];
 /*
  ** section.c
  */
+unsigned int	swap_bits(unsigned int c);
+int				ft_fat(char *ptr, char *name, int swap);
 void			ft_build_section_list_64(t_slice *list, struct mach_header_64 *header);
 
 void			ft_add_segment_to_list_64(struct segment_command_64 *segment,
@@ -52,12 +54,6 @@ char			get_section_type_64(int n_sect, t_slice *sections);
 void			ft_print_nlist_32(char *stringtable, struct nlist *symbol, t_slice *list);
 char			get_type_32(struct nlist *sym, t_slice *sections);
 char			get_section_type_32(int n_sect, t_slice *sections);
-
-/*
- ** dump_header.c
- */
-int				dump_header_64(struct mach_header_64 *header);
-int				dump_header(void *header_ptr);
 
 /*
 ** sort.c

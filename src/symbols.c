@@ -18,14 +18,17 @@ const t_type	g_type_table[] = {
 void	ft_print_nlist_64(char *stringtable, struct nlist_64 *symbol,
 		t_slice *list)
 {
+	char	type;
+
 	if (!(symbol->n_type & N_STAB))
 	{
-		if (symbol->n_value)
+		type = get_type_64(symbol, list);
+		if (type != 'U' && type != 'u')
 			ft_printf("%016llx ", symbol->n_value);
 		else
 			ft_putstr("                 ");
 		// ft_printf("%hhx ", symbol->n_type);
-		ft_printf("%c ", get_type_64(symbol, list));
+		ft_printf("%c ", type);
 		// ft_printf("%d ", symbol->n_sect);
 		ft_printf("%s\n", stringtable + symbol->n_un.n_strx);
 	}
@@ -76,4 +79,3 @@ char	get_type_64(struct nlist_64 *sym, t_slice *sections)
 		return ' ';
 	}
 }
-
