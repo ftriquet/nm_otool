@@ -24,7 +24,7 @@ int			ft_nm(char *ptr, char *name)
 	if (magic_number == MH_DYLIB)
 		return (ft_nm_dylib(ptr, list, name));
 	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		return ft_fat(ptr, NULL, (magic_number == FAT_CIGAM));
+		return ft_fat(ptr, name, (magic_number == FAT_CIGAM));
 	ft_dprintf(STDERR_FILENO, "\n%s: This file is not a valid binary\n", name);
 	return (1);
 }

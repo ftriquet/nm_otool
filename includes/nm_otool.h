@@ -14,7 +14,7 @@ extern const t_type	g_type_table[];
 /*
  ** section.c
  */
-unsigned int	swap_bits(unsigned int c);
+//unsigned int	swap_bits(unsigned int c);
 int				ft_fat(char *ptr, char *name, int swap);
 void			ft_build_section_list_64(t_slice *list, struct mach_header_64 *header);
 
