@@ -9,23 +9,27 @@
 #include <stdlib.h>
 #include <libft.h>
 
+static int	ft_error(char *msg)
+{
+	ft_dprintf(STDERR_FILENO, "Error: %s\n", msg);
+	return (EXIT_FAILURE);
+}
+
 int			ft_openfile(int fd, char *name)
 {
 	char			*ptr;
 	struct stat		buf;
 
-	if (fstat(fd, &buf) < 0 || (ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
-				MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-	{
-		ft_dprintf(STDERR_FILENO, "system failed");
-		return (EXIT_FAILURE);
-	}
+	if (fstat(fd, &buf) < 0)
+		return (ft_error(ft_strerror()));
+	if (buf.st_size == 0)
+		return (ft_error("The file is not a valid binary (empty file)"));
+	if ((ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0))
+			== MAP_FAILED)
+		return ft_error("Unable to map file to memory");
 	ft_nm(ptr, name);
 	if (munmap(ptr, buf.st_size) < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "munmap failed");
-		return (EXIT_FAILURE);
-	}
+		return (ft_error("Unable to unmap file"));
 	close(fd);
 	return (EXIT_SUCCESS);
 }
@@ -39,7 +43,7 @@ int			main(int argc, char **argv)
 	i = 0;
 	if (argc == 1)
 	{
-		if ((fd = open("a.out", O_RDONLY)) != -1 && ft_openfile(fd, NULL) == EXIT_SUCCESS)
+		if ((fd = open("a.out", O_RDONLY)) != -1 && ft_openfile(fd, "a.out") == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		ft_printf("Usage %s <files>\n", argv[0]);
 		return (EXIT_FAILURE);
@@ -47,10 +51,7 @@ int			main(int argc, char **argv)
 	while (++i < argc)
 	{
 		if ((fd = open(argv[i], O_RDONLY)) < 0)
-		{
-			ft_dprintf(STDERR_FILENO, "open failed");
-			return (EXIT_FAILURE);
-		}
+			return (ft_error(ft_strerror()));
 		if ((fd = ft_openfile(fd, argc > 2 ? argv[i] : NULL)))
 			return (fd);
 	}
