@@ -23,9 +23,12 @@ int		ft_display_symlist_64(struct mach_header_64 *header, t_slice *sectlist)
 		if (lc->cmd == LC_SYMTAB)
 		{
 			symtab = (struct symtab_command *)lc;
-			symlist = ft_build_symlist_64(header, symtab->nsyms, symtab->symoff);
-			ft_slice_merge_sort(symlist, &alpha_cmp, (void *)header + symtab->stroff);
-			ft_print_symlist_64(symlist, sectlist, (void *)header + symtab->stroff);
+			symlist = ft_build_symlist_64(header,
+					symtab->nsyms, symtab->symoff);
+			ft_slice_merge_sort(symlist, &alpha_cmp,
+					(void *)header + symtab->stroff);
+			ft_print_symlist_64(symlist, sectlist,
+					(void *)header + symtab->stroff);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
@@ -48,9 +51,12 @@ int		ft_display_symlist_32(struct mach_header *header, t_slice *sectlist)
 		if (lc->cmd == LC_SYMTAB)
 		{
 			symtab = (struct symtab_command *)lc;
-			symlist = ft_build_symlist_32(header, symtab->nsyms, symtab->symoff);
-			ft_slice_merge_sort(symlist, &alpha_cmp, (void *)header + symtab->stroff);
-			ft_print_symlist_32(symlist, sectlist, (void *)header + symtab->stroff);
+			symlist = ft_build_symlist_32(header, symtab->nsyms,
+					symtab->symoff);
+			ft_slice_merge_sort(symlist, &alpha_cmp,
+					(void *)header + symtab->stroff);
+			ft_print_symlist_32(symlist, sectlist,
+					(void *)header + symtab->stroff);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;

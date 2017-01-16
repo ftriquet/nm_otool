@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <libft.h>
 
-void		ft_build_section_list_64(t_slice *list, struct mach_header_64 *header)
+void		ft_build_section_list_64(t_slice *list,
+		struct mach_header_64 *header)
 {
 	struct load_command			*lc;
 	size_t						i;
@@ -23,7 +24,7 @@ void		ft_build_section_list_64(t_slice *list, struct mach_header_64 *header)
 void		ft_add_segment_to_list_64(struct segment_command_64 *segment,
 		t_slice *list)
 {
-	size_t		i;
+	size_t				i;
 	struct section_64	*section;
 
 	i = 0;
@@ -33,8 +34,7 @@ void		ft_add_segment_to_list_64(struct segment_command_64 *segment,
 		ft_slice_append(list, section);
 		section = (void *)section + sizeof(*section);
 		if (section == NULL)
-			break;
+			break ;
 		++i;
 	}
 }
-

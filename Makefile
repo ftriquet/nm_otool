@@ -1,17 +1,17 @@
-NM_SRCS_NAMES = nm.c \
-				section.c \
-				section_32.c \
-				symbol_table.c \
-				symbols.c \
-				symbols_32.c \
-				symlist.c \
-				fat.c \
-			   	sort.c \
-				main.c
+NM_SRCS_NAMES = nm/nm.c \
+				nm/section.c \
+				nm/section_32.c \
+				nm/symbol_table.c \
+				nm/symbols.c \
+				nm/symbols_32.c \
+				nm/symlist.c \
+				nm/fat.c \
+			   	nm/sort.c \
+				nm/main.c
 
 NM_OBJS_NAMES = $(NM_SRCS_NAMES:.c=.o)
 
-OTOOL_SRCS_NAMES = ft_otool.c \
+OTOOL_SRCS_NAMES = otool/ft_otool.c \
 				   # ft_otool_d.c \
 				   # ft_otool_tmp.c
 
@@ -45,7 +45,7 @@ ft_nm: $(NM_OBJS)
 	gcc $(CLFAGS) $^ $(LDFLAGS) $(INCFLAGS) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR){nm,otool}
 	gcc -c $(CFLAGS) $< -o $@ $(INCFLAGS)
 
 clean:

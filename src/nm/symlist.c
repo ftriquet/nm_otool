@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include <libft.h>
 
-t_slice	*ft_build_symlist_64(struct mach_header_64 *header, int nsyms, int symoff)
+t_slice	*ft_build_symlist_64(struct mach_header_64 *header,
+		int nsyms, int symoff)
 {
 	t_slice			*symlist;
 	size_t			i;
@@ -25,7 +26,8 @@ t_slice	*ft_build_symlist_64(struct mach_header_64 *header, int nsyms, int symof
 	return (symlist);
 }
 
-int		ft_print_symlist_64(t_slice *symlist, t_slice *sectlist, char *stringtable)
+int		ft_print_symlist_64(t_slice *symlist, t_slice *sectlist,
+		char *stringtable)
 {
 	size_t					i;
 
@@ -55,7 +57,8 @@ t_slice	*ft_build_symlist_32(struct mach_header *header, int nsyms, int symoff)
 	return (symlist);
 }
 
-int		ft_print_symlist_32(t_slice *symlist, t_slice *sectlist, char *stringtable)
+int		ft_print_symlist_32(t_slice *symlist, t_slice *sectlist,
+		char *stringtable)
 {
 	size_t					i;
 

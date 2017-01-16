@@ -18,15 +18,15 @@ static unsigned int	swap_bits(unsigned int c)
 
 static intmax_t		get_value(intmax_t value, intmax_t swap)
 {
-	return swap ? swap_bits(value) : value;
+	return (swap ? swap_bits(value) : value);
 }
 
-int			ft_fat(char *ptr, char *name, int swap)
+int					ft_fat(char *ptr, char *name, int swap)
 {
 	struct fat_header		*h;
 	struct fat_arch			*arch;
 	uint32_t				offset;
-	struct mach_header_64 	*header;
+	struct mach_header_64	*header;
 	size_t					i;
 
 	h = (struct fat_header *)ptr;
@@ -39,11 +39,11 @@ int			ft_fat(char *ptr, char *name, int swap)
 		{
 			offset = get_value(arch->offset, swap);
 			header = (void *)ptr + offset;
-			break;
+			break ;
 		}
 		arch = (void *)arch + sizeof(*arch);
 		i++;
 	}
 	header = (void *)ptr + offset;
-	return ft_nm((void *)header, name);
+	return (ft_nm((void *)header, name));
 }

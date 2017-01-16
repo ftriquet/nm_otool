@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <libft.h>
 
-
 const t_type	g_type_table[] = {
 	{SECT_DATA, 'd'},
 	{SECT_BSS, 'b'},
@@ -12,9 +11,6 @@ const t_type	g_type_table[] = {
 	{NULL, 's'}
 };
 
-/*
-** TODO: type des symboles, ne pas afficher l'addresse des undefine
-*/
 void	ft_print_nlist_64(char *stringtable, struct nlist_64 *symbol,
 		t_slice *list)
 {
@@ -27,9 +23,7 @@ void	ft_print_nlist_64(char *stringtable, struct nlist_64 *symbol,
 			ft_printf("%016llx ", symbol->n_value);
 		else
 			ft_putstr("                 ");
-		// ft_printf("%hhx ", symbol->n_type);
 		ft_printf("%c ", type);
-		// ft_printf("%d ", symbol->n_sect);
 		ft_printf("%s\n", stringtable + symbol->n_un.n_strx);
 	}
 }
@@ -47,35 +41,30 @@ char	get_section_type_64(int n_sect, t_slice *sections)
 	return (g_type_table[i].symtype);
 }
 
-//  	__common	__DATA 	: 	globales non initialisees => S
-//  	__data		__DATA 	: 	globales initialisees => D
-//  	__bss		__DATA 	: 	variables static
 char	get_type_64(struct nlist_64 *sym, t_slice *sections)
 {
 	if (sym->n_type & N_EXT)
 	{
-		// upeercase
 		if ((sym->n_type & N_TYPE) == N_SECT)
 			return (ft_toupper(get_section_type_64(sym->n_sect, sections)));
 		if ((sym->n_type & N_TYPE) == N_UNDF)
 			return (sym->n_value ? 'C' : 'U');
 		if ((sym->n_type & N_TYPE) == N_ABS)
-			return 'A';
+			return ('A');
 		if ((sym->n_type & N_TYPE) == N_INDR)
-			return 'I';
-		return ' ';
+			return ('I');
+		return (' ');
 	}
 	else
 	{
-		// lowercase
 		if ((sym->n_type & N_TYPE) == N_SECT)
 			return (get_section_type_64(sym->n_sect, sections));
 		if ((sym->n_type & N_TYPE) == N_UNDF)
-			return 'u';
+			return ('u');
 		if ((sym->n_type & N_TYPE) == N_ABS)
-			return 'a';
+			return ('a');
 		if ((sym->n_type & N_TYPE) == N_INDR)
-			return 'i';
-		return ' ';
+			return ('i');
+		return (' ');
 	}
 }

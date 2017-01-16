@@ -33,8 +33,7 @@ void		ft_add_segment_to_list_32(struct segment_command *segment,
 		ft_slice_append(list, section);
 		section = (void *)section + sizeof(*section);
 		if (section == NULL)
-			break;
+			break ;
 		++i;
 	}
 }
-
