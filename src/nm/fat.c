@@ -21,7 +21,7 @@ static intmax_t		get_value(intmax_t value, intmax_t swap)
 	return (swap ? swap_bits(value) : value);
 }
 
-int					ft_fat(char *ptr, char *name, int swap)
+int					ft_fat(char *ptr, char *name, int swap, char *errname)
 {
 	struct fat_header		*h;
 	struct fat_arch			*arch;
@@ -35,15 +35,13 @@ int					ft_fat(char *ptr, char *name, int swap)
 	i = 0;
 	while ((int)i < get_value(h->nfat_arch, swap))
 	{
+		offset = get_value(arch->offset, swap);
+		header = (void *)ptr + offset;
 		if (get_value(arch->cputype, swap) == CPU_TYPE_X86_64)
-		{
-			offset = get_value(arch->offset, swap);
-			header = (void *)ptr + offset;
 			break ;
-		}
 		arch = (void *)arch + sizeof(*arch);
 		i++;
 	}
 	header = (void *)ptr + offset;
-	return (ft_nm((void *)header, name));
+	return (ft_nm((void *)header, name, errname));
 }

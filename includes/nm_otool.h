@@ -15,7 +15,7 @@ extern const t_type	g_type_table[];
  ** section.c
  */
 //unsigned int	swap_bits(unsigned int c);
-int				ft_fat(char *ptr, char *name, int swap);
+int				ft_fat(char *ptr, char *name, int swap, char *errname);
 void			ft_build_section_list_64(t_slice *list, struct mach_header_64 *header);
 
 void			ft_add_segment_to_list_64(struct segment_command_64 *segment,
@@ -34,7 +34,7 @@ int				ft_display_symlist_32(struct mach_header *header, t_slice *list);
 */
 int				ft_nm_32(char *ptr, t_slice *list, char *name);
 int				ft_nm_64(char *ptr, t_slice *list, char *name);
-int				ft_nm(char *ptr, char *name);
+int				ft_nm(char *ptr, char *name, char *errname);
 int				ft_nm_dylib(char *ptr, t_slice *list, char *name);
 
 /*

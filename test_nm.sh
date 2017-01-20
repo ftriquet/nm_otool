@@ -14,10 +14,10 @@ DIFF=`diff FT_NM_OUTPUT NM_OUTPUT`
 # cat NM_OUTPUT
 
 if [ -z "$DIFF" ]; then
-	echo "OK"
+	echo "$1: OK"
 else
 	echo "$DIFF"
-	echo "KO"
+	echo "$1: KO"
 fi
 rm FT_NM_OUTPUT
 rm NM_OUTPUT

@@ -10,7 +10,7 @@
 #include <libft.h>
 #include <mach-o/fat.h>
 
-int			ft_nm(char *ptr, char *name)
+int			ft_nm(char *ptr, char *name, char *errname)
 {
 	unsigned int		magic_number;
 	t_slice				*list;
@@ -24,8 +24,8 @@ int			ft_nm(char *ptr, char *name)
 	if (magic_number == MH_DYLIB)
 		return (ft_nm_dylib(ptr, list, name));
 	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		return (ft_fat(ptr, name, (magic_number == FAT_CIGAM)));
-	ft_dprintf(STDERR_FILENO, "\n%s: This file is not a valid binary\n", name);
+		return (ft_fat(ptr, name, (magic_number == FAT_CIGAM), errname));
+	ft_dprintf(STDERR_FILENO, "%s: The file was not recognized as a valid object file.\n", errname);
 	return (1);
 }
 

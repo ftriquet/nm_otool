@@ -15,7 +15,7 @@ static int	ft_error(char *msg)
 	return (EXIT_FAILURE);
 }
 
-int			ft_openfile(int fd, char *name)
+int			ft_openfile(int fd, char *name, char *errname)
 {
 	char			*ptr;
 	struct stat		buf;
@@ -27,7 +27,7 @@ int			ft_openfile(int fd, char *name)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0))
 			== MAP_FAILED)
 		return (ft_error("Unable to map file to memory"));
-	ft_nm(ptr, name);
+	ft_nm(ptr, name, errname);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (ft_error("Unable to unmap file"));
 	close(fd);
@@ -44,7 +44,7 @@ int			main(int argc, char **argv)
 	if (argc == 1)
 	{
 		if ((fd = open("a.out", O_RDONLY)) != -1 &&
-				ft_openfile(fd, "a.out") == EXIT_SUCCESS)
+				ft_openfile(fd, "a.out", "a.out") == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		ft_printf("Usage %s <files>\n", argv[0]);
 		return (EXIT_FAILURE);
@@ -53,7 +53,7 @@ int			main(int argc, char **argv)
 	{
 		if ((fd = open(argv[i], O_RDONLY)) < 0)
 			return (ft_error(ft_strerror()));
-		if ((fd = ft_openfile(fd, argc > 2 ? argv[i] : NULL)))
+		if ((fd = ft_openfile(fd, argc > 2 ? argv[i] : NULL, argv[i])))
 			return (fd);
 	}
 	return (EXIT_SUCCESS);
