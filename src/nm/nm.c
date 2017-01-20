@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   nm.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 22:28:38 by ftriquet          #+#    #+#             */
+/*   Updated: 2017/01/20 22:29:58 by ftriquet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mach-o/loader.h>
 #include <nm_otool.h>
 #include <mach-o/nlist.h>
@@ -25,7 +37,9 @@ int			ft_nm(char *ptr, char *name, char *errname)
 		return (ft_nm_dylib(ptr, list, name));
 	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
 		return (ft_fat(ptr, name, (magic_number == FAT_CIGAM), errname));
-	ft_dprintf(STDERR_FILENO, "%s: The file was not recognized as a valid object file.\n", errname);
+	ft_dprintf(STDERR_FILENO,
+			"%s: The file was not recognized as a valid object file.\n",
+			errname);
 	return (1);
 }
 

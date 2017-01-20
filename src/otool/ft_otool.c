@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_otool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akpenou <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/31 15:50:38 by akpenou           #+#    #+#             */
-/*   Updated: 2017/01/20 17:42:27 by ftriquet         ###   ########.fr       */
+/*   Created: 2017/01/20 22:28:48 by ftriquet          #+#    #+#             */
+/*   Updated: 2017/01/20 22:30:57 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int			ft_otool_dylib(char *ptr, t_slice *list, char *name)
 	return (0);
 }
 
-
 void		ft_otool(char *ptr, char *name)
 {
-	unsigned int	magic_number;
+	unsigned int		magic_number;
 	t_slice				*list;
 
 	magic_number = *(int *)ptr;
@@ -67,8 +66,9 @@ int			ft_openfile(int fd, char *name)
 	struct stat		buf;
 
 	if (fstat(fd, &buf) < 0)
-		return ft_error(ft_strerror());
-	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+		return (ft_error(ft_strerror()));
+	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
+			== MAP_FAILED)
 		return (ft_error("Unable to map file."));
 	ft_otool(ptr, name);
 	if (munmap(ptr, buf.st_size) < 0)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   otool_32.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 22:28:48 by ftriquet          #+#    #+#             */
+/*   Updated: 2017/01/20 22:28:49 by ftriquet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
 #include <mach-o/fat.h>
@@ -10,7 +22,8 @@ static void	ft_print_output_32(struct section *section, void *ptr, char *name)
 	unsigned int	i;
 	int				j;
 
-	printf("%s:\nContents of (%s,%s) section\n", name, section->segname, section->sectname);
+	printf("%s:\nContents of (%s,%s) section\n", name, section->segname,
+			section->sectname);
 	p = (void *)ptr + section->offset;
 	i = 0;
 	while (i < section->size)

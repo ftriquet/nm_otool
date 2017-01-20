@@ -14,8 +14,8 @@ NM_OBJS_NAMES = $(NM_SRCS_NAMES:.c=.o)
 
 OTOOL_SRCS_NAMES = otool/ft_otool.c \
 				   otool/fat.c \
-				   otool/32.c \
-				   otool/64.c \
+				   otool/otool_32.c \
+				   otool/otool_64.c \
 				   utils/utils.c
 				   # ft_otool_d.c \
 				   # ft_otool_tmp.c

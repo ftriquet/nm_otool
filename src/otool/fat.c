@@ -1,16 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fat.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 22:28:47 by ftriquet          #+#    #+#             */
+/*   Updated: 2017/01/20 22:30:13 by ftriquet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
 #include <mach-o/fat.h>
 #include <nm_otool.h>
 #include <libft.h>
 
-
 int			ft_otool_fat(char *ptr, char *name, int swap)
 {
 	struct fat_header		*h;
 	struct fat_arch			*arch;
 	uint32_t				offset;
-	struct mach_header_64 	*header;
+	struct mach_header_64	*header;
 	size_t					i;
 
 	h = (struct fat_header *)ptr;
@@ -22,7 +33,7 @@ int			ft_otool_fat(char *ptr, char *name, int swap)
 		offset = get_value(arch->offset, swap);
 		header = (void *)ptr + offset;
 		if (get_value(arch->cputype, swap) == CPU_TYPE_X86_64)
-			break;
+			break ;
 		arch = (void *)arch + sizeof(*arch);
 		i++;
 	}
@@ -30,4 +41,3 @@ int			ft_otool_fat(char *ptr, char *name, int swap)
 	ft_otool((void *)header, name);
 	return (0);
 }
-

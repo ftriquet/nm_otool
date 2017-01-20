@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 22:28:50 by ftriquet          #+#    #+#             */
+/*   Updated: 2017/01/20 22:30:24 by ftriquet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libft.h>
 #include <unistd.h>
 
-int		ft_error(char *msg)
+int				ft_error(char *msg)
 {
 	ft_dprintf(STDERR_FILENO, "Error: %s\n", msg);
 	return (FAILURE);
