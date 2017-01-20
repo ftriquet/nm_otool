@@ -7,11 +7,16 @@ NM_SRCS_NAMES = nm/nm.c \
 				nm/symlist.c \
 				nm/fat.c \
 			   	nm/sort.c \
-				nm/main.c
+				nm/main.c \
+				utils/utils.c
 
 NM_OBJS_NAMES = $(NM_SRCS_NAMES:.c=.o)
 
 OTOOL_SRCS_NAMES = otool/ft_otool.c \
+				   otool/fat.c \
+				   otool/32.c \
+				   otool/64.c \
+				   utils/utils.c
 				   # ft_otool_d.c \
 				   # ft_otool_tmp.c
 
@@ -45,7 +50,7 @@ ft_nm: $(NM_OBJS)
 	gcc $(CLFAGS) $^ $(LDFLAGS) $(INCFLAGS) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR){nm,otool}
+	@mkdir -p $(OBJ_DIR){nm,otool,utils}
 	gcc -c $(CFLAGS) $< -o $@ $(INCFLAGS)
 
 clean:

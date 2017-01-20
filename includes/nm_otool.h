@@ -14,7 +14,6 @@ extern const t_type	g_type_table[];
 /*
  ** section.c
  */
-//unsigned int	swap_bits(unsigned int c);
 int				ft_fat(char *ptr, char *name, int swap, char *errname);
 void			ft_build_section_list_64(t_slice *list, struct mach_header_64 *header);
 
@@ -68,5 +67,18 @@ int				ft_print_symlist_32(t_slice *symlist, t_slice *sectlist, char *stringtabl
 t_slice			*ft_build_symlist_32(struct mach_header *header, int nsyms, int symoff);
 int				ft_print_symlist_64(t_slice *symlist, t_slice *sectlist, char *stringtable);
 t_slice			*ft_build_symlist_64(struct mach_header_64 *header, int nsyms, int symoff);
+
+/*
+** utils.c
+*/
+unsigned int	swap_bytes(unsigned int c);
+int				ft_error(char *msg);
+intmax_t		get_value(intmax_t value, int swap);
+
+void			handler_32(char *ptr, char *name);
+void			handler_64(char *ptr, char *name);
+int				ft_otool_fat(char *ptr, char *name, int swap);
+void			ft_otool(char *ptr, char *name);
+
 
 #endif

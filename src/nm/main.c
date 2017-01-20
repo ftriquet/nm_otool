@@ -9,12 +9,6 @@
 #include <stdlib.h>
 #include <libft.h>
 
-static int	ft_error(char *msg)
-{
-	ft_dprintf(STDERR_FILENO, "Error: %s\n", msg);
-	return (EXIT_FAILURE);
-}
-
 int			ft_openfile(int fd, char *name, char *errname)
 {
 	char			*ptr;
@@ -24,7 +18,7 @@ int			ft_openfile(int fd, char *name, char *errname)
 		return (ft_error(ft_strerror()));
 	if (buf.st_size == 0)
 		return (ft_error("The file is not a valid binary (empty file)"));
-	if ((ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0))
+	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 			== MAP_FAILED)
 		return (ft_error("Unable to map file to memory"));
 	ft_nm(ptr, name, errname);

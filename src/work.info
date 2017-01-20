@@ -1,8 +1,0 @@
-nm :
-	- done
-
-otool :
-	-t done
-	-d done
-	-h done
-
