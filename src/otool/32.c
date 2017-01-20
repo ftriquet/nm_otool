@@ -37,15 +37,12 @@ void		handler_32(char *ptr, char *name)
 		if (lc->cmd == LC_SEGMENT)
 		{
 			seg = (struct segment_command *)lc;
-			if (!strcmp(seg->segname, SEG_TEXT) && (i = -1))
+			sect = (void *)seg + sizeof(struct segment_command);
+			while (++i < seg->nsects)
 			{
-				sect = (void *)seg + sizeof(struct segment_command);
-				while (++i < seg->nsects)
-				{
-					if (!strcmp(sect->sectname, SECT_TEXT))
-						return (ft_print_output_32(sect, ptr, name));
-					sect = (void *)sect + sizeof(*sect);
-				}
+				if (!strcmp(sect->sectname, SECT_TEXT))
+					return (ft_print_output_32(sect, ptr, name));
+				sect = (void *)sect + sizeof(*sect);
 			}
 			lc = (void *)lc + lc->cmdsize;
 		}

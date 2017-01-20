@@ -1,6 +1,5 @@
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
-#include <mach-o/fat.h>
 #include <nm_otool.h>
 #include <libft.h>
 
@@ -27,25 +26,24 @@ static void	ft_print_output_64(struct section_64 *section, void *ptr, char *name
 void		handler_64(char *ptr, char *name)
 {
 	unsigned int				i;
+	unsigned int				j;
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
 	struct load_command			*lc;
 
 	i = 0;
+	j = 0;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	while (++i < ((struct mach_header_64 *)ptr)->ncmds)
 		if (lc->cmd == LC_SEGMENT_64)
 		{
 			seg = (struct segment_command_64 *)lc;
-			if (!strcmp(seg->segname, SEG_TEXT) && (i = -1))
+			sect = (void *)seg + sizeof(struct segment_command_64);
+			while (j++ < seg->nsects)
 			{
-				sect = (void *)seg + sizeof(struct segment_command_64);
-				while (++i < seg->nsects)
-				{
-					if (!strcmp(sect->sectname, SECT_TEXT))
-						return (ft_print_output_64(sect, ptr, name));
-					sect = (void *)sect + sizeof(*sect);
-				}
+				if (!strcmp(sect->sectname, SECT_TEXT))
+					return (ft_print_output_64(sect, ptr, name));
+				sect = (void *)sect + sizeof(*sect);
 			}
 			lc = (void *)lc + lc->cmdsize;
 		}
