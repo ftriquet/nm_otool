@@ -17,8 +17,6 @@ OTOOL_SRCS_NAMES = otool/ft_otool.c \
 				   otool/otool_32.c \
 				   otool/otool_64.c \
 				   utils/utils.c
-				   # ft_otool_d.c \
-				   # ft_otool_tmp.c
 
 OTOOL_OBJS_NAMES = $(OTOOL_SRCS_NAMES:.c=.o)
 
@@ -32,7 +30,7 @@ OTOOL_SRCS = $(addprefix $(SRC_DIR), $(OTOOL_SRCS_NAMES))
 NM_OBJS = $(addprefix $(OBJ_DIR), $(NM_OBJS_NAMES))
 OTOOL_OBJS = $(addprefix $(OBJ_DIR), $(OTOOL_OBJS_NAMES))
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 LDFLAGS = -lft -L libft
 
