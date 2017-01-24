@@ -6,7 +6,7 @@
 /*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 22:28:48 by ftriquet          #+#    #+#             */
-/*   Updated: 2017/01/20 22:30:57 by ftriquet         ###   ########.fr       */
+/*   Updated: 2017/01/24 21:41:47 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void		ft_otool(char *ptr, char *name)
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
 		ft_otool_fat(ptr, name, (magic_number == FAT_CIGAM));
 	else
-		ft_dprintf(STDERR_FILENO, "The file is not a valid binary\n");
+		ft_dprintf(STDERR_FILENO,
+				"%s: The file was not recognized as a valid object file.\n",
+				name);
 }
 
 int			ft_openfile(int fd, char *name)
@@ -86,7 +88,7 @@ int			main(int argc, char **argv)
 	i = 0;
 	if (argc == 1)
 	{
-		printf("Usage %s <files>\n", argv[0]);
+		ft_printf("Usage %s <files>\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
 	while (++i < argc)

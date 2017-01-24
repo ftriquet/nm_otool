@@ -6,7 +6,7 @@
 /*   By: ftriquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 22:28:48 by ftriquet          #+#    #+#             */
-/*   Updated: 2017/01/20 22:28:49 by ftriquet         ###   ########.fr       */
+/*   Updated: 2017/01/24 21:42:44 by ftriquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ static void	ft_print_output_32(struct section *section, void *ptr, char *name)
 	unsigned int	i;
 	int				j;
 
-	printf("%s:\nContents of (%s,%s) section\n", name, section->segname,
+	ft_printf("%s:\nContents of (%s,%s) section\n", name, section->segname,
 			section->sectname);
 	p = (void *)ptr + section->offset;
 	i = 0;
 	while (i < section->size)
 	{
-		printf("%08llx", (unsigned long long)section->addr + i);
-		printf("\t");
+		ft_printf("%08llx", (unsigned long long)section->addr + i);
+		ft_printf("\t");
 		j = 17;
 		while (i < section->size && --j)
-			printf("%02hhx ", p[i++]);
-		printf("\n");
+			ft_printf("%02hhx ", p[i++]);
+		ft_printf("\n");
 	}
 }
 
@@ -53,7 +53,7 @@ void		handler_32(char *ptr, char *name)
 			sect = (void *)seg + sizeof(struct segment_command);
 			while (++i < seg->nsects)
 			{
-				if (!strcmp(sect->sectname, SECT_TEXT))
+				if (!ft_strcmp(sect->sectname, SECT_TEXT))
 					return (ft_print_output_32(sect, ptr, name));
 				sect = (void *)sect + sizeof(*sect);
 			}
